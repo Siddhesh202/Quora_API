@@ -3,11 +3,8 @@ package com.example.quora.models;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -16,31 +13,25 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
-public class Question {
+public class Answer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(nullable = false)
-    private String title;
-
-    @Column(nullable = false)
-    private String body;
+    private String text;
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Date created_at;
 
+    // 1 user can have many answers
     @ManyToOne
     private User user;
 
-    @OneToMany(mappedBy = "question")
-    List<Answer> answers = new ArrayList<>();
-
-    @ManyToMany()
-    List<Topic> topics = new ArrayList<>();
-
+    // 1 question can have many answers
+    @ManyToOne
+    private Question question;
 }

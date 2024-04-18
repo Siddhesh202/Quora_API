@@ -29,4 +29,7 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Question> questions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Answer> answers = new ArrayList<>();
 }
